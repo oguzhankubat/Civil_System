@@ -11,12 +11,11 @@ def query():
 
     vkn = random.randint(1000000000, 9999999999)
 
-    # JSON dosyasını oku
     try:
         with open("Tc_Numbers.json", "r", encoding="utf-8") as f:
             tc_numbers = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
-        print(" Hata: Tc_Numbers.json dosyası bulunamadı veya hatalı format!")
+        print(" Hata: Kimlik dosyası bulunamadı veya hatalı format!")
         exit()
 
     if isinstance(tc_numbers, list) and len(tc_numbers) > 0:
@@ -51,8 +50,8 @@ while True:
             print(response.text)
 
     except requests.exceptions.ConnectionError:
-        print(" Bağlantı hatası! Spring Boot uygulaması çalışıyor mu?")
+        print(" Bağlantı hatası!")
     except requests.exceptions.RequestException as e:
         print(f" Bir hata oluştu: {e}")
 
-    #time.sleep(1)
+    time.sleep(1)

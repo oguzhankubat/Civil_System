@@ -45,6 +45,12 @@ public class Person {
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
     
+    @Column(name = "birth_place",nullable = false,length = 25)
+    private String birthPlace;
+    
+    @Column(name = "residence_adress",nullable = false,length = 150)
+    private String residenceAdress;
+    
     @Column(name="created_time")
     private LocalDateTime createdTime;
     

@@ -30,5 +30,14 @@ public class CreatePersonRequest { //POJO (Plain Old Java Object) denir. Bilgi i
 	
 	@NotNull
 	private LocalDate birthDate;
+	
+	@NotNull
+	@NotBlank
+	private String birthPlace;
+	
+	@NotNull
+	@NotBlank
+	private String residenceAdress;
+	
 
 }

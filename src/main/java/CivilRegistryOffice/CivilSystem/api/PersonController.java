@@ -1,5 +1,7 @@
 package CivilRegistryOffice.CivilSystem.api;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import CivilRegistryOffice.CivilSystem.DTO.getAllCivilDTO;
 import CivilRegistryOffice.CivilSystem.business.abstracts.PersonService;
 import CivilRegistryOffice.CivilSystem.business.requests.CreatePersonRequest;
 import CivilRegistryOffice.CivilSystem.business.requests.CreateTcKimlikNumberRequest;
@@ -37,6 +40,11 @@ public class PersonController {
     public ResponseEntity<String> addPerson(@Valid @RequestBody CreatePersonRequest createPersonRequest) {
         personService.addPerson(createPersonRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body("Vatandaş Başarıyla Eklendi.");
+    }
+    
+    @GetMapping("/getall")
+    public List<getAllCivilDTO> getAllEntities() {
+        return personService.getAllPersons();
     }
 }
 

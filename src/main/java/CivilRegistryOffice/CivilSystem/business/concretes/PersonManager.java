@@ -1,15 +1,23 @@
 package CivilRegistryOffice.CivilSystem.business.concretes;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import CivilRegistryOffice.CivilSystem.Core.ModelMapperServices;
 import CivilRegistryOffice.CivilSystem.Core.exceptions.BusinessExceptions;
+import CivilRegistryOffice.CivilSystem.DTO.getAllCivilDTO;
 import CivilRegistryOffice.CivilSystem.business.abstracts.PersonService;
 import CivilRegistryOffice.CivilSystem.business.requests.CreatePersonRequest;
 import CivilRegistryOffice.CivilSystem.business.requests.CreateTcKimlikNumberRequest;
@@ -129,6 +137,39 @@ public class PersonManager implements PersonService{
 
         return tcKimlikNo.toString(); 
     }
+    
+    @Override
+    public List<getAllCivilDTO> getAllPersons() {
+        List<Person> persons = personRepository.findAll(); 
 
+   
+        List<getAllCivilDTO> personDTOs = persons.stream()
+        	    .map(person -> modelMapperServices.forResponse().map(person, getAllCivilDTO.class))
+        	    .collect(Collectors.toList());
+
+        savePersonsToJson(personDTOs);                        
+
+        return personDTOs;                                
+    }
+
+    private void savePersonsToJson(List<getAllCivilDTO> persons) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        File directory = new File("data");
+
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        try {
+            objectMapper.writeValue(new File(directory, "persons.json"), persons);
+            System.out.println("JSON data saved successfully to data/persons.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to save JSON data.");
+        }
+    }
 
 }

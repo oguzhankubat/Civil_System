@@ -15,4 +15,6 @@ public class CheckTcKimlikNumberResponse {
 	private String tcKimlikNumber;
 	private char gender;
 	private LocalDate birthDate;
+	private String birthPlace;
+	private String residenceAdress;
 }

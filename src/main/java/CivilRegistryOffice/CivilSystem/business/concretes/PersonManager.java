@@ -165,10 +165,8 @@ public class PersonManager implements PersonService{
 
         try {
             objectMapper.writeValue(new File(directory, "persons.json"), persons);
-            System.out.println("JSON data saved successfully to data/persons.json");
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Failed to save JSON data.");
         }
     }
 

@@ -2,6 +2,7 @@ package CivilRegistryOffice.CivilSystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -30,5 +31,20 @@ public class CivilSystemApplication {
 		problemDetails.setMessage(illegalArgumentException.getMessage());
 		
 		return problemDetails;
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ProblemDetails handleValidationException(MethodArgumentNotValidException ex) {
+	    ProblemDetails problemDetails = new ProblemDetails();
+
+	    String firstErrorMessage = ex.getBindingResult()
+	                                 .getFieldErrors()
+	                                 .stream()
+	                                 .findFirst()
+	                                 .map(error -> error.getDefaultMessage())
+	                                 .orElse("Validation failed");
+
+	    problemDetails.setMessage(firstErrorMessage);
+	    return problemDetails;
 	}
 }

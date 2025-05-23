@@ -20,7 +20,7 @@ import CivilRegistryOffice.CivilSystem.Core.exceptions.BusinessExceptions;
 import CivilRegistryOffice.CivilSystem.DTO.getAllCivilDTO;
 import CivilRegistryOffice.CivilSystem.business.abstracts.PersonService;
 import CivilRegistryOffice.CivilSystem.business.requests.CreatePersonRequest;
-import CivilRegistryOffice.CivilSystem.business.requests.CreateTcKimlikNumberRequest;
+import CivilRegistryOffice.CivilSystem.business.requests.QueryTcKimlikNumberRequest;
 import CivilRegistryOffice.CivilSystem.business.responses.CheckTcKimlikNumberResponse;
 import CivilRegistryOffice.CivilSystem.business.rules.BeforeCreateDateTimeRule;
 import CivilRegistryOffice.CivilSystem.business.rules.BeforeCreateGenderRule;
@@ -43,7 +43,7 @@ public class PersonManager implements PersonService{
 	
 	
 	
-    public CheckTcKimlikNumberResponse checkPersonByTcKimlikNumber(CreateTcKimlikNumberRequest createTcKimlikNumberRequest) {
+    public CheckTcKimlikNumberResponse checkPersonByTcKimlikNumber(QueryTcKimlikNumberRequest createTcKimlikNumberRequest) {
     	Optional<Person> personOptional = personRepository.findBytcKimlikNumber(createTcKimlikNumberRequest.getTcKimlikNumber());
         
         Person person = personOptional
